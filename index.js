@@ -1,5 +1,5 @@
 /*!
-  Copyright (c) 2018 Jed Watson.
+  Copyright (c) 2017 Jed Watson.
   Licensed under the MIT License (MIT), see
   http://jedwatson.github.io/classnames
 */
@@ -10,7 +10,11 @@
 
 	var hasOwn = {}.hasOwnProperty;
 
-	function classNames() {
+    function scopeBunny (klass) {
+        return `bunny-${klass}`
+    }
+
+    function classNames () {
 		var classes = [];
 
 		for (var i = 0; i < arguments.length; i++) {
@@ -21,27 +25,21 @@
 
 			if (argType === 'string' || argType === 'number') {
 				classes.push(arg);
-			} else if (Array.isArray(arg)) {
-				if(arg.length) {
-					var inner = classNames.apply(null, arg);
-					if (inner) {
-						classes.push(inner);
-					}
+			} else if (Array.isArray(arg) && arg.length) {
+				var inner = classNames.apply(null, arg);
+				if (inner) {
+					classes.push(inner);
 				}
 			} else if (argType === 'object') {
-				if (arg.toString !== Object.prototype.toString) {
-					classes.push(arg.toString());
-				} else {
-					for (var key in arg) {
-						if (hasOwn.call(arg, key) && arg[key]) {
-							classes.push(key);
-						}
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
 					}
 				}
 			}
 		}
 
-		return classes.join(' ');
+        return classes.map(scopeBunny).join(' ');
 	}
 
 	if (typeof module !== 'undefined' && module.exports) {
