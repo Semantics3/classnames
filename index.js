@@ -11,7 +11,10 @@
 	var hasOwn = {}.hasOwnProperty;
 
     function scopeBunny (klass) {
-        return `bunny-${klass}`
+        if(!klass.startsWith('bunny-')){
+            return `bunny-${klass}`
+        }
+        return klass
     }
 
     function classNames () {
@@ -38,8 +41,7 @@
 				}
 			}
 		}
-
-        return classes.map(scopeBunny).join(' ');
+        return classes.join(' ').split(' ').map(scopeBunny).join(' ');
 	}
 
 	if (typeof module !== 'undefined' && module.exports) {
