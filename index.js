@@ -11,10 +11,10 @@
 	var hasOwn = {}.hasOwnProperty;
 
     function scopeBunny (klass) {
-        if(!klass.startsWith('bunny-')){
-            return `bunny-${klass}`
-        }
-        return klass
+		if(klass === "" || klass.startsWith('bunny-')){
+			return klass
+		}
+		return `bunny-${klass}`
     }
 
     function classNames () {
